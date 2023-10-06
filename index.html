@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    *{
+      box-sizing: border-box;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    body{
+      margin: 0;
+    }
+
+    span{
+      transform: translateY(-50%);
+    }
+
+    .side-bar{
+      border-left: 2px solid rgb(31, 30, 30);
+      height: 100vh;
+      width: max(15%, 250px);
+      background-color: rgb(117, 133, 161);
+      z-index: 100;
+      position: absolute;
+      right: 0;
+      padding: 2% 2%;
+    }
+
+    label{
+      font-size: 18px;
+    }
+
+    #yText{
+      width: 100%;
+      font-size: 18px;
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    #yNumb{
+      width: 100%;
+      font-size: 18px;
+      margin-bottom: 32px;
+    }
+
+    button{
+      font-size: 18px;
+      width: 100%;
+      cursor: pointer;
+      padding: 5px 0;
+      background-color: rgb(235, 45, 45);
+    }
+
+    p{
+      position: absolute;
+      font-size: 12px;
+      color: whitesmoke;
+    }
+  </style>
+
+  <div class="side-bar">
+    <label for="yText">Your text:</label>
+    <input type="text" id="yText" class="textarea" value="vasearar❤">
+    <label for="yNumb">Number after remove last:</label>
+    <input type="text" id="yNumb" value="400">
+    <button class="clear">CLEAR ALL</button>
+    <p>For save (shift+win+s)</p>
+  </div>
+
+  <script>
+    
+
+    document.querySelector(".clear").addEventListener("click", () => {
+      document.querySelectorAll("span").forEach((span) => {
+        span.remove();
+      });
+    })
+
+    window.addEventListener("mousemove", (e) => {
+      let x = e.clientX;
+      let y = e.clientY;
+
+     if (document.querySelectorAll("span").length >= parseInt(document.querySelector("#yNumb").value)){
+        document.querySelectorAll("span")[0].remove();
+     }
+     
+      if (Math.abs(x - lastposX) < 10 && Math.abs(y - lastposY) < 10) {
+        return;
+      }  
+      
+      let span = document.createElement("span");
+      let arr = document.querySelector(".textarea").value.replace(/\s/g, "").split("");
+      span.textContent = arr[index];
+      span.style.position = "fixed";
+      span.style.left = x + "px";
+      span.style.top = `${y}px`;
+      span.style.fontSize = Math.abs((Math.abs(x)+Math.abs(y))/2 - (Math.abs(lastposX)+Math.abs(lastposY))/2) * 3 + "px";
+      document.body.append(span);
+      lastposX = x;
+      lastposY = y;
+      index = index >= arr.length - 1 ? 0 : index + 1;
+    });
+
+    let lastposX = 0;
+    let lastposY = 0;
+    let index = 0;
+    console.log("In future I'll use variables))");
+  </script>
+</body>
+</html>
